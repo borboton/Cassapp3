@@ -23,9 +23,6 @@ public class App
     	PropertyConfigurator.configure(log4jproperties);	
     	Logger log = Logger.getLogger(log4jproperties);
     	
-    	
-    	// code goes here
-    	
     	double start = 90;
     	double end = 5;
     	long b = 10000000; 
@@ -36,17 +33,18 @@ public class App
     		try {
    			
     			con.connect("kpscannet", 9042);
-    			Session bulkInsert = con.getSession();
+    			Session strInsert = con.getSession();
     			
     			long startTime = System.currentTimeMillis();
     			
 				for (int i = 0; i < b ; i++) {    
 															 
-					if (i % 100000 == 0) {						
+					if (i % 100000 == 0) {			
+						
 						long finishTime = System.currentTimeMillis();
-				    	long elapsedTime = finishTime - startTime;
+				    	long elapsedTime = finishTime - startTime ;
 				    	
-				    	System.out.println(TimeUnit.MILLISECONDS.toMinutes(elapsedTime));
+				    	System.out.println("Write count: " +i + " Min: " + TimeUnit.MILLISECONDS.toMinutes(elapsedTime));
 				    
 					}											
     				   					
@@ -57,7 +55,7 @@ public class App
     				//String nombre = "PRBEL" + i ;
     				// Metric met = new Metric(timeNow+i, lat, "PRBEL99937", "BBIP");    	    				
     				Metric met = new Metric(timeNow+i, lat, "PRBEL413607", "BBIP");
-    				bulkInsert.execute(met.toString());
+    				strInsert.execute(met.toString());
     				//System.out.println(met.toString());
     			
     			}
